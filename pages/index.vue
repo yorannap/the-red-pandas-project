@@ -31,6 +31,7 @@
                     <div class="text-box">
                         <h1><!-- <?php the_field('slide_home_title'); ?> --> --></h1>
                         <p><!-- <?php the_field('slide_home_content'); ?> --> --></p>
+                        <slide-arrows directions="right" :start="true"></slide-arrows>
                         <!-- <?php slide_arrows("right", "yes"); ?> --> -->
                     </div>
                 </div>
@@ -576,7 +577,17 @@
 </template>
 
 <script>
-export default {}
+import { mapActions } from "vuex";
+import SlideArrows from '../components/SlideArrows.vue'
+
+export default {
+    components: {
+        SlideArrows
+    },
+    methods: {
+        ...mapActions(["moveSlides"]),
+    },
+}
 </script>
 
 <style>
