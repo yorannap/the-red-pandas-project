@@ -1,0 +1,123 @@
+{
+  "graphics": {
+    "iconHeaderMenu": "/svg/icon-header-menu.svg",
+    "iconHeaderSupport": "/svg/icon-header-support.svg",
+    "iconMenuClosed": "/svg/icon-menu-closed.svg",
+    "iconMenuOpen": "/svg/icon-menu-open.svg",
+    "iconRotate": "/svg/icon-rotate.svg",
+    "arrowLeft": "/svg/arrow-left.svg",
+    "arrowRight": "/svg/arrow-right.svg",
+    "sun": "/svg/sun.svg",
+    "iconFav": "/svg/icon-fav.svg",
+    "iconHome": "/svg/icon-home.svg",
+    "iconAbout": "/svg/icon-about.svg",
+    "iconFacts": "/svg/icon-facts.svg",
+    "iconMap": "/svg/icon-map.svg",
+    "iconThreats": "/svg/icon-threats.svg",
+    "iconTimeline": "/svg/icon-timeline.svg",
+    "iconProjects": "/svg/icon-projects.svg",
+    "iconThanks": "/svg/icon-thanks.svg"
+  },
+  "home": {
+    "illustration": "/svg/redpanda-1.svg",
+    "title": "Red Pandas",
+    "content": "A design project aimed to bring awareness to the endangered red pandas through education. Hope you enjoy!"
+  },
+  "about": {
+    "illustration": "/svg/redpanda-5.svg",
+    "title": "About",
+    "content1": "Red pandas are endangered mammals native to the eastern Himalayas and southwestern China.",
+    "content2": "They have reddish-brown fur, long, shaggy tails, and a slight waddle due to their shorter front legs.",
+    "content3": "They're roughly the size of a cat, though with longer bodies, and somewhat heavier.",
+    "content4": "Bamboo being their main source of food, alongside eggs, birds, and insects."
+  },
+  "fact1": {
+    "illustration": "/svg/redpanda-2.svg",
+    "title": "On hinds",
+    "content": "When red pandas feel provoked they often stand on their hind legs to appear large and 'threatening'."
+  },
+  "fact2": {
+    "illustration": "/svg/redpanda-4.svg",
+    "title": "Extra thumb",
+    "content": "Like giant pandas, red pandas have an extra “thumb,” which is an enlarged bone for grabbing tree branches and bamboo stems."
+  },
+  "fact3": {
+    "illustration": "/svg/redpanda-3.svg",
+    "title": "Lying high",
+    "content": "They sleep stretched out high on branches with legs dangling when it is hot, and curled up into their tail when it's cold."
+  },
+  "map": {
+    "illustration": "/svg/redpanda-map.svg",
+    "title": "Habitat",
+    "key": "= Territory"
+  },
+  "threat1": {
+    "illustration": "/svg/redpanda-hunter.svg",
+    "title": "Poaching",
+    "content": "Red pandas are often hunted and captured in order to be sold to private collectors, zoos, and kept as pets."
+  },
+  "threat2": {
+    "illustration": "/svg/redpanda-forest.svg",
+    "title": "Habitat loss",
+    "content": "Deforestation and habitat loss is the number one threat facing red pandas. They can't survive without a home."
+  },
+  "timeline": {
+    "title": "Timeline",
+    "sidetext": "1825 — Discovered",
+    "trendtext": "Estimated Population",
+    "dates": [
+      2001,
+      2004,
+      2007,
+      2010,
+      2013
+    ],
+    "points": [
+      "12,000",
+      "11,000",
+      "10,000",
+      "9,000",
+      "8,000",
+      "7,000"
+    ],
+    "blocks": [
+      {
+        "classes": ["one", "dark"],
+        "title": "In 2003",
+        "content": "Four captive-bred red pandas were successfully released into the wild."
+      },
+      {
+        "classes": ["two", "light"],
+        "title": "In 2004",
+        "content": "Firefox starts using a red panda as their logo and mascot."
+      },
+      {
+        "classes": ["three", "dark"],
+        "title": "In 2008",
+        "content": "Red pandas were listed as endangered."
+      },
+      {
+        "classes": ["four", "light"],
+        "title": "In 2013",
+        "content": "A red panda called Rusty escapes the National Zoo."
+      }
+    ]
+  },
+  "project1": {
+    "illustration": "/svg/redpanda-project-1.svg",
+    "title": "Conservation",
+    "content": "The Nursery Guardians program aims to create nurseries in degraded forest areas in order to offset habitat loss.<a class='background-link' href='https://www.redpandanetwork.org/what-we-do/conservation/' target='_blank' rel='noopener'>Support Red Panda Network</a>"
+  },
+  "project2": {
+    "illustration": "/svg/redpanda-project-2.svg",
+    "title": "Guardians",
+    "content": "Forest Guardians work with their communities to support their well-being, preserve the environment and protect red panda habitats.<a class='background-link' href='https://www.redpandanetwork.org/forest-guardians/' target='_blank' rel='noopener'>Support Red Panda Network</a>"
+  },
+  "credits": {
+    "illustration": "/svg/redpanda-6.svg",
+    "title": "Thank you!",
+    "content1": "I hope you enjoyed the project and learned something you didn't know already. Let's shine some light on the 'last of the first' panda.",
+    "content2": "<p><a class='ynap-link' href='https://yorannap.com/' target='_blank' rel='noopener'>Made by Yoran</a></p>",
+    "content3": "<p class='info-source'>Information sources:</p><p><a class='source-link background-link' href='https://en.wikipedia.org/wiki/Red_panda' target='_blank' rel='noopener'>Wikipedia</a><a class='source-link background-link' href='https://www.redpandanetwork.org/' target='_blank' rel='noopener'>Red Panda Network</a><a class='source-link background-link' href='https://www.worldwildlife.org/species/red-panda' target='_blank' rel='noopener'>WWF</a><a class='source-link background-link' href='https://www.nationalgeographic.com/animals/mammals/r/red-panda/' target='_blank' rel='noopener'>National Geographic</a></p>"
+  }
+}

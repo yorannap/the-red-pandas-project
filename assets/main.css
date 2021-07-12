@@ -233,7 +233,7 @@ div.content {
     position: relative;
 }
 
-.spacer svg {
+.spacer object {
     transform: scale(0);
     position: absolute;
 }
@@ -293,7 +293,7 @@ main.content {
     font-size: 80%;
 }
 
-.slide-arrows svg {
+.slide-arrows img {
     fill: #855467;
     width: 2.5vh;
 }

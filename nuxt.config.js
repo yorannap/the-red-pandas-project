@@ -4,17 +4,28 @@ export default {
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'red-pandas-project',
+    title: 'Red Pandas Project – Bringing awareness to a flagship species',
     htmlAttrs: {
       lang: 'en'
     },
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: '' }
+      { hid: 'description', name: 'description', content: 'A design project aimed to bring awareness to the endangered red pandas through education.' },
+
+      { property: 'og:title', content: 'Red Pandas Project – Bringing awareness to a flagship species' },
+      { property: 'og:type', content: 'website' },
+      { property: 'og:description', content: 'A design project aimed to bring awareness to the endangered red pandas through education.' },
+      { property: 'og:url', content: 'https://redpandasproject.com/' },
+      { property: 'og:image', content: '/images/featured-link-image.png' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      { rel: 'stylesheet', href: 'https://use.typekit.net/yzg6lah.css' } // Adobe fonts
+    ],
+    script: [
+      { src: 'https://static.addtoany.com/menu/page.js', defer: true },
+      { src: 'https://www.googletagmanager.com/gtag/js?id=G-MDC1THN1CH', defer: true }
     ]
   },
 
