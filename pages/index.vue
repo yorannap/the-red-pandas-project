@@ -302,8 +302,8 @@
     <div id="share-popup">
       <div id="share-backdrop"></div>
       <div id="share-box">
-        <div id="share-exit">
-          <object :data="mainJson.graphics.iconMenuOpen" type="image/svg+xml"></object>
+        <div id="share-exit" @click="$store.dispatch('animateShareBox')">
+          <img :src="mainJson.graphics.iconMenuOpen">
         </div>
         <h2>Support</h2>
         <p>

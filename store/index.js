@@ -8,7 +8,7 @@ const createStore = () => {
       return {
         mainJson: mainJson,
 
-        i: 0,
+        //i: 0,
         initAnimationActive: "yes",
 
         subTitle0: " ",
@@ -21,17 +21,17 @@ const createStore = () => {
 
         activeSlide: 0,
         oldSlide: 0,
-        slides: null, //document.querySelectorAll(".panel"),
+        numOfslides: null,
         loading: false,
 
         pointClick: null, //document.getElementsByClassName('tl-point'),
         oldPointClick: -1,
 
-        //slideArrowLeft: null, //document.getElementsByClassName('slide_arrow left'),
-        //slideArrowRight: null, //document.getElementsByClassName('slide_arrow right'),
+        // slideArrowLeft: null, //document.getElementsByClassName('slide_arrow left'),
+        // slideArrowRight: null, //document.getElementsByClassName('slide_arrow right'),
 
         menuToggle: null, //document.getElementsByClassName('header-icon'),
-        mainContent: null, //document.getElementById("main-content"),
+        //mainContent: null, //document.getElementById("main-content"),
         menuItem: null, //document.getElementsByClassName('menu-item'),
         menuActive: false,
 
@@ -42,15 +42,27 @@ const createStore = () => {
 
         shareBoxExit: null, //document.getElementById("share-exit"),
         supportIcon: null, //document.getElementById("icon-support"),
-        shareBoxOpen: "no",
+        shareBoxOpen: false,
       }
     },
     mutations: {
       incrementActiveSlide(state, value) {
-        state.activeSlide += value;
+        let newActiveSlide = state.activeSlide + value
+        if(newActiveSlide >= 0 && newActiveSlide < state.numOfslides) {
+          state.activeSlide = newActiveSlide;
+        }
       },
       setActiveSlide(state, value) {
         state.activeSlide = value;
+      },
+      defineNumOfSlides(state) {
+        state.numOfslides = document.querySelectorAll(".panel").length
+      },
+      setOldSlideNum(state) {
+        state.oldSlide = state.activeSlide;
+      },
+      setShareBoxOpen(state, value) {
+        state.shareBoxOpen = value
       }
     },
     actions: {
@@ -60,46 +72,26 @@ const createStore = () => {
       },
       triggerKeydown(context, e) {
         if (context.state.loading === false) {
-          if ( context.state.menuActive === true ) {
+          /* if ( context.state.menuActive === true ) {
             animateMenu();
             return;
-          }
+          } */
           // left or up arrow keys or backspace
           if ( (e.keyCode == '37') || (e.keyCode == '38') || (e.keyCode == '8') ) {
             context.dispatch('directionalSlideChange', -1)
-            /* activeSlide = activeSlide - 1;
-            // are we at the beginning of the slides?
-            activeSlide = activeSlide < 0 ? 0 : activeSlide;
-            // are we at the end of the slides?
-            activeSlide = activeSlide > slides.length - 1 ? slides.length - 1 : activeSlide;
-            if (oldSlide === activeSlide) {
-              return;
-            }
-            else {
-              moveSlides();
-            } */
           }
           // right or down arrow keys or spacebar
           else if ( (e.keyCode == '39') || (e.keyCode == '40') || (e.keyCode == '32') ) {
             context.dispatch('directionalSlideChange', 1)
-            /* activeSlide = activeSlide + 1;
-            // are we at the beginning of the slides?
-            activeSlide = activeSlide < 0 ? 0 : activeSlide;
-            // are we at the end of the slides?
-            activeSlide = activeSlide > slides.length - 1 ? slides.length - 1 : activeSlide;
-            if (oldSlide === activeSlide) {
-              return;
-            }
-            else {
-              moveSlides();
-            } */
           }
         }
       },
       moveSlides(context) {
-        let moveFactor = 100 + "vw";
-        if ( context.state.menuActive === "no" ) {
-          moveFactor = -100 * context.state.activeSlide + "vw";
+        // only move if menu isn't active and if slides have actually changed
+        if ((context.state.menuActive === false) && (context.state.oldSlide !== context.state.activeSlide)) {
+          console.log('activemove')
+          context.commit('setOldSlideNum')
+          let moveFactor = -100 * context.state.activeSlide + "vw";
           if ( [1,5,8,11].indexOf(context.state.activeSlide) > -1 ) { 
             gsap.to( "#non-fixed .shift", { x: moveFactor });
             gsap.to( "#non-fixed .content", { y: 15 + "vh", x: moveFactor });
@@ -118,6 +110,37 @@ const createStore = () => {
           //moveSun();
         }
       },
+      animateShareBox(context) {
+        let mainContent = document.getElementById("main-content")
+        if ( context.state.shareBoxOpen === false ) {
+          console.log('opened', mainContent)
+          gsap.to("#share-box", { y: -50 + "%" });
+          gsap.to("#share-backdrop", { opacity: 1 });
+          
+          context.commit('setShareBoxOpen', true)
+          mainContent.addEventListener("click", retrigger);
+
+          //menuActive = "yes";
+          //menuToggle[i].removeEventListener("click", animateMenu);
+        }
+        else {
+          console.log('closed', mainContent)
+          gsap.to("#share-box", { y: -275 + "%" });
+          gsap.to("#share-backdrop", { opacity: 0 });
+          
+          context.commit('setShareBoxOpen', false)
+          mainContent.removeEventListener("click", retrigger);
+
+          //menuActive = "no";
+          /* for(let i = 0; i < menuToggle.length; i++) {
+            menuToggle[i].addEventListener("click", animateMenu);
+          } */
+        }
+        function retrigger(event) {
+            console.log('triggered', event)
+            context.dispatch('animateShareBox')
+        }
+      },
       gsapDefaults(context) {
         gsap.defaults({
           ease: "power3.out", 
@@ -127,6 +150,7 @@ const createStore = () => {
       init(context) {
         context.dispatch('gsapDefaults');
         document.addEventListener('keydown', (event) => { context.dispatch('triggerKeydown', event) })
+        context.commit('defineNumOfSlides');
       }
     },
     getters: {
