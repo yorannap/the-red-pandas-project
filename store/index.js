@@ -6,43 +6,18 @@ const createStore = () => {
   return new Vuex.Store({
     state() {
       return {
+        preloadEnabled: true,
+        loading: false,
         mainJson: mainJson,
-
-        //i: 0,
-        initAnimationActive: "yes",
-
-        subTitle0: " ",
-        subTitle1: "Introducing",
-        subTitle2: "Interesting Facts",
-        subTitle3: "Threats",
-        subTitle4: "Projects",
         activeSubtitle: "Introducing",
         activeIcon: "#icon-home",
-
+        panels: null,
         activeSlide: 0,
         oldSlide: 0,
         numOfslides: null,
-        loading: false,
-
-        pointClick: null, //document.getElementsByClassName('tl-point'),
-        oldPointClick: -1,
-
-        // slideArrowLeft: null, //document.getElementsByClassName('slide_arrow left'),
-        // slideArrowRight: null, //document.getElementsByClassName('slide_arrow right'),
-
-        menuToggle: null, //document.getElementsByClassName('header-icon'),
-        //mainContent: null, //document.getElementById("main-content"),
-        menuItem: null, //document.getElementsByClassName('menu-item'),
         menuActive: false,
-
-        rotation: null, //window.matchMedia("(orientation: portrait)"),
-
-        copyLink: null, //document.getElementById("linkInput"),
-        copyButton: null, //document.getElementById("linkButton"),
-
-        shareBoxExit: null, //document.getElementById("share-exit"),
-        supportIcon: null, //document.getElementById("icon-support"),
         shareBoxOpen: false,
+        rotation: null
       }
     },
     mutations: {
@@ -55,14 +30,29 @@ const createStore = () => {
       setActiveSlide(state, value) {
         state.activeSlide = value;
       },
-      defineNumOfSlides(state) {
-        state.numOfslides = document.querySelectorAll(".panel").length
+      initStateValues(state) {
+        state.numOfslides = document.querySelectorAll(".panel").length;
+        state.panels = document.querySelectorAll('#non-fixed .panel');
+        state.rotation = window.matchMedia("(orientation: portrait)")
+        gsap.defaults({
+          ease: "power3.out", 
+          duration: 1
+        });
       },
       setOldSlideNum(state) {
         state.oldSlide = state.activeSlide;
       },
       setShareBoxOpen(state, value) {
         state.shareBoxOpen = value
+      },
+      setMenuActive(state, value) {
+        state.menuActive = value
+      },
+      setActiveIcon(state, value) {
+        state.activeIcon = value
+      },
+      setActiveSubtitle(state, value) {
+        state.activeSubtitle = value
       }
     },
     actions: {
@@ -72,10 +62,10 @@ const createStore = () => {
       },
       triggerKeydown(context, e) {
         if (context.state.loading === false) {
-          /* if ( context.state.menuActive === true ) {
-            animateMenu();
+          if ( context.state.menuActive === true ) {
+            context.dispatch('animateMenu');
             return;
-          } */
+          }
           // left or up arrow keys or backspace
           if ( (e.keyCode == '37') || (e.keyCode == '38') || (e.keyCode == '8') ) {
             context.dispatch('directionalSlideChange', -1)
@@ -89,7 +79,6 @@ const createStore = () => {
       moveSlides(context) {
         // only move if menu isn't active and if slides have actually changed
         if ((context.state.menuActive === false) && (context.state.oldSlide !== context.state.activeSlide)) {
-          console.log('activemove')
           context.commit('setOldSlideNum')
           let moveFactor = -100 * context.state.activeSlide + "vw";
           if ( [1,5,8,11].indexOf(context.state.activeSlide) > -1 ) { 
@@ -105,52 +94,143 @@ const createStore = () => {
             gsap.to( "#fixed .content", { y: 35 + "vh" });
             gsap.to( "div.text-box", { y: 0 + "vh" });
           }
-          //switchIcons();
-          //switchSubtitle();
-          //moveSun();
+          // animate arrows
+          let panelEl = context.state.panels[context.state.activeSlide]
+          let panelArrows = panelEl.querySelector('.slide-arrows')
+          gsap.to('.slide-arrows', { opacity: 0 });
+          gsap.fromTo(panelArrows, { x: -20, opacity: 0 }, { x: 0, opacity: 1, duration: 0.7, delay: 0.65});
+          //dispatch other actions
+          context.dispatch('switchIcons');
+          context.dispatch('switchSubtitle');
+          context.dispatch('moveSun');
         }
       },
-      animateShareBox(context) {
-        let mainContent = document.getElementById("main-content")
-        if ( context.state.shareBoxOpen === false ) {
-          console.log('opened', mainContent)
-          gsap.to("#share-box", { y: -50 + "%" });
-          gsap.to("#share-backdrop", { opacity: 1 });
-          
-          context.commit('setShareBoxOpen', true)
-          mainContent.addEventListener("click", retrigger);
-
-          //menuActive = "yes";
-          //menuToggle[i].removeEventListener("click", animateMenu);
+      switchIcons(context) {
+        let activeSlide = context.state.activeSlide;
+        let oldActiveIcon = context.state.activeIcon;
+        // update activeicon based on activeslide
+        if (activeSlide >= 0 && activeSlide < 1) {context.commit('setActiveIcon', '#icon-home')}
+        else if (activeSlide >= 1 && activeSlide <= 1) {context.commit('setActiveIcon', '#icon-about')}
+        else if (activeSlide >= 2 && activeSlide <= 4) {context.commit('setActiveIcon', '#icon-facts')}
+        else if (activeSlide >= 5 && activeSlide <= 5) {context.commit('setActiveIcon', '#icon-map')}
+        else if (activeSlide >= 6 && activeSlide <= 7) {context.commit('setActiveIcon', '#icon-threats')}
+        else if (activeSlide >= 8 && activeSlide <= 8) {context.commit('setActiveIcon', '#icon-timeline')}
+        else if (activeSlide >= 9 && activeSlide <= 10) {context.commit('setActiveIcon', '#icon-projects')}
+        else if (activeSlide >= 11 && activeSlide <= 11) {context.commit('setActiveIcon', '#icon-thanks')}
+        // check if icon activeicon has changed
+        if (oldActiveIcon === context.state.activeIcon) {
+          return;
         }
         else {
-          console.log('closed', mainContent)
+          gsap.to('#fixed .spacer object', { scale: 0 });
+          gsap.to('#fixed .spacer ' + context.state.activeIcon, { scale: 1 });
+        }
+      },
+      switchSubtitle(context) {
+        let activeSlide = context.state.activeSlide;
+        let oldActiveSubtitle = context.state.activeSubtitle;
+        // update activeSubtitle based on activeSlide
+        if (activeSlide >= 0 && activeSlide < 1) {context.commit('setActiveSubtitle', 'Introducing')}
+        else if (activeSlide >= 1 && activeSlide <= 1) {context.commit('setActiveSubtitle', ' ')}
+        else if (activeSlide >= 2 && activeSlide <= 4) {context.commit('setActiveSubtitle', 'Interesting Facts')}
+        else if (activeSlide >= 5 && activeSlide <= 5) {context.commit('setActiveSubtitle', ' ')}
+        else if (activeSlide >= 6 && activeSlide <= 7) {context.commit('setActiveSubtitle', 'Threats')}
+        else if (activeSlide >= 8 && activeSlide <= 8) {context.commit('setActiveSubtitle', ' ')}
+        else if (activeSlide >= 9 && activeSlide <= 10) {context.commit('setActiveSubtitle', 'Projects')}
+        else if (activeSlide >= 11 && activeSlide <= 11) {context.commit('setActiveSubtitle', ' ')}
+        // check if icon activeicon has changed
+        if (oldActiveSubtitle === context.state.activeSubtitle) {
+          return;
+        }
+        else {
+          gsap.to("div.underline", { scaleY: -7, duration: 0.3 });
+          gsap.to("div.underline", { scaleY: -1, duration: 0.7, delay: 0.25 });
+          setTimeout(function(){ 
+            document.getElementById("subtitle").innerHTML= context.state.activeSubtitle; 
+          }, 30);
+        }
+      },
+      moveSun(context) {
+        let activeSlide = context.state.activeSlide
+        if(activeSlide === 0 || activeSlide === 1 || activeSlide === 3 || activeSlide === 7 || activeSlide === 10) {
+          gsap.to( "#sun", { x: 15 + "%", y: 30 + "%", scale: 1, opacity: 1 });
+          return;
+        }
+        else if(activeSlide === 2 || activeSlide === 4 || activeSlide === 6 || activeSlide === 9 || activeSlide === 11) {
+          gsap.to( "#sun", { x: -20 + "%", y: -5 + "%", scale: 0.7, opacity: 1 });
+          return;
+        }
+        else if(activeSlide === 5 || activeSlide === 8) {
+          gsap.to( "#sun", { x: -20 + "%", y: -5 + "%", scale: 0, opacity: 0 });
+          return;
+        }
+      },
+      rotationAlert(context) {
+        let portrait = context.state.rotation.matches
+        //console.log(context.state.rotation)
+        if (portrait) {
+          gsap.to("#rotate-alert", { opacity: 100, display:"block" });
+          gsap.to(".site-container", { opacity: 0, display:"none" });
+        }
+        else {
+          gsap.to("#rotate-alert", { opacity: 0, display:"none" });
+          gsap.to(".site-container", { opacity: 100, display:"block" });
+        }
+      },
+      mainContentClick(context) {
+        if ( context.state.menuActive === true ) {
+          context.dispatch('animateMenu')
+        }
+        if ( context.state.shareBoxOpen === true ) {
+          context.dispatch('animateShareBox')
+        }
+      },
+      animateMenu(context) {
+        let slides = document.querySelector('#non-fixed');
+        // opening menu
+        if ( context.state.menuActive === false ) {
+          slides.style.pointerEvents = 'none';
+          gsap.to( "#site-menu", { x: 0 + "%" });
+          gsap.to( "#main-content", { x: 26 + "vh" });
+          context.commit('setMenuActive', true);
+        }
+        // closing menu
+        else {
+          slides.style.pointerEvents = 'auto';
+          gsap.to( "#site-menu", { x: -100 + "%" });
+          gsap.to( "#main-content", { x: 0 });
+          context.commit('setMenuActive', false);
+        }  
+      },
+      menuItemClicked(context, slide) {
+        context.commit('setActiveSlide', slide);
+        context.dispatch('animateMenu');
+        context.dispatch('moveSlides');
+      },
+      animateShareBox(context) {
+        let appEl = document.querySelector('#app');
+        // open share box
+        if ( context.state.shareBoxOpen === false && context.state.menuActive === false ) {
+          appEl.style.pointerEvents = 'none';
+          context.commit('setShareBoxOpen', true)
+          gsap.to("#share-box", { y: -50 + "%" });
+          gsap.to("#share-backdrop", { opacity: 1 });
+        }
+        // close share box
+        else {
+          appEl.style.pointerEvents = 'auto';
+          context.commit('setShareBoxOpen', false)
           gsap.to("#share-box", { y: -275 + "%" });
           gsap.to("#share-backdrop", { opacity: 0 });
-          
-          context.commit('setShareBoxOpen', false)
-          mainContent.removeEventListener("click", retrigger);
-
-          //menuActive = "no";
-          /* for(let i = 0; i < menuToggle.length; i++) {
-            menuToggle[i].addEventListener("click", animateMenu);
-          } */
         }
-        function retrigger(event) {
-            console.log('triggered', event)
-            context.dispatch('animateShareBox')
-        }
-      },
-      gsapDefaults(context) {
-        gsap.defaults({
-          ease: "power3.out", 
-          duration: 1
-        });
       },
       init(context) {
-        context.dispatch('gsapDefaults');
+        context.commit('initStateValues');
+        context.dispatch('rotationAlert');
+        // listen for keyboard events
         document.addEventListener('keydown', (event) => { context.dispatch('triggerKeydown', event) })
-        context.commit('defineNumOfSlides');
+        // listen to rotation change
+        context.state.rotation.addEventListener('change', () => { context.dispatch('rotationAlert') })
       }
     },
     getters: {
