@@ -7,7 +7,7 @@ const createStore = () => {
     state() {
       return {
         preloadEnabled: true,
-        loading: false,
+        loading: true,
         mainJson: mainJson,
         activeSubtitle: "Introducing",
         activeIcon: "#icon-home",
@@ -78,7 +78,10 @@ const createStore = () => {
       },
       moveSlides(context) {
         // only move if menu isn't active and if slides have actually changed
-        if ((context.state.menuActive === false) && (context.state.oldSlide !== context.state.activeSlide)) {
+        if (
+        (context.state.menuActive === false) && 
+        (context.state.oldSlide !== context.state.activeSlide) &&
+        (context.state.loading === false)) {
           context.commit('setOldSlideNum')
           let moveFactor = -100 * context.state.activeSlide + "vw";
           if ( [1,5,8,11].indexOf(context.state.activeSlide) > -1 ) { 
@@ -224,9 +227,28 @@ const createStore = () => {
           gsap.to("#share-backdrop", { opacity: 0 });
         }
       },
+      preloadAnimation(context) {
+        if ( context.state.preloadEnabled === true ) {
+          gsap.from( "#non-fixed .shift", { opacity: 0, delay: 1 });
+          gsap.from( "#non-fixed .shift", { x: -7 + "%", y: -7 + "%", scale: 0.25, duration: 2, delay: 2, ease: "power4.inOut" });
+          gsap.from( "#sun", { scale: 0, delay: 3 });
+  
+          gsap.from( "#non-fixed .content", { x: 100 + "vw", delay: 3 });
+          gsap.from( "#fixed .content", { x: 100 + "vw", delay: 3 });
+          gsap.from("header", { y: -140, delay: 3 });
+          gsap.from("#icon-home", { scale: 0, delay: 3 });
+  
+          setTimeout(function(){ context.state.loading = false; }, 4000);
+        }
+        else {
+          context.state.loading = false;
+        }
+      },
       init(context) {
         context.commit('initStateValues');
         context.dispatch('rotationAlert');
+        // trigger preload animation
+        context.dispatch('preloadAnimation');
         // listen for keyboard events
         document.addEventListener('keydown', (event) => { context.dispatch('triggerKeydown', event) })
         // listen to rotation change

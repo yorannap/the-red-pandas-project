@@ -53,12 +53,26 @@ export default {
   },
   methods: {
     pointClick(e) {
-      //console.log(e.path[2].querySelector('.tl-data'))
+      let circle;
+      let data;
+      console.log(typeof e)
+      if(typeof e === 'object') {
+        circle = e.target;
+        data = e.path[2].querySelector('.tl-data');
+      }
+      else {
+        let point = document.querySelectorAll('.tl-point')[4]
+        circle = point.querySelector('circle')
+        data = point.querySelector('.tl-data')
+      }
       gsap.to( ".tl-point circle", { scale: 1.0, fill: "#EEBFAF", transformOrigin: 'center' });
       gsap.to( ".tl-point .tl-data", { opacity: 0 });
-      gsap.to( e.target, { scale: 1.5, fill: "#855467" });
-      gsap.to( e.path[2].querySelector('.tl-data'), { opacity: 1 });
-    }
+      gsap.to( circle, { scale: 1.5, fill: "#855467" });
+      gsap.to( data, { opacity: 1 });
+    },
+  },
+  mounted() {
+    this.pointClick();
   },
 }
 </script>

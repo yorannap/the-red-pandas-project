@@ -1,6 +1,6 @@
 <template>
   <div id="sun" class="wrap-illustration shift sun">
-    <object :data="$store.getters.mainJson.graphics.sun" type="image/svg+xml"></object>
+    <img :src="$store.getters.mainJson.graphics.sun" alt="The sun">
   </div>
 </template>
 

@@ -434,7 +434,7 @@ div.content {
   background-color: #FFFDF4;
 }
 
-main.content {
+#main-content {
   overflow: hidden;
   position: absolute;
   top: 0;
@@ -463,12 +463,17 @@ main.content {
 }
 
 .slide-arrows p {
-  margin: 2vh 1vh 0 0;
+  margin: 2vh 1.5vh 0 0;
   float: left;
   text-transform: uppercase;
-  margin-top: 0.6vh;
+  margin-top: 0.5vh;
   font-weight: 600;
   font-size: 80%;
+}
+
+.slide-arrows p.back-arrow {
+  float: right;
+  margin-left: 1.5vh;
 }
 
 .slide-arrows img {
@@ -483,22 +488,18 @@ main.content {
   transform: translate(15%, 30%);
 }
 
-@-webkit-keyframes rotating {
+@keyframes rotating {
   from {
-    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
   }
 
   to {
-    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
   }
 }
 
-#sun svg {
-  -webkit-animation: rotating 30s linear infinite;
-}
-
-#sun svg {
-  fill: #fcf2e8;
+#sun img {
+  animation: rotating 30s linear infinite;
 }
 
 /* other illustrations */
@@ -520,7 +521,7 @@ main.content {
 }
 
 .wrap-illustration.red-panda-1 {
-  transform: translate(28%, 24%);
+  transform: translate(26%, 22%);
   width: 100%;
 }
 
@@ -749,7 +750,7 @@ main.content {
 .tl-grid {
   width: 20%;
   height: 100%;
-  display: inline-block;
+  /* display: inline-block; */
   float: left;
   border-left: 2px dashed #FCF2E7;
 }
@@ -939,6 +940,12 @@ main.content {
   transform: scaleY(-1);
   left: 75%;
   bottom: 15%;
+}
+
+/* projects */
+.project-one a,
+.project-two a {
+  margin-top: 0.75em;
 }
 
 /* thank you page */

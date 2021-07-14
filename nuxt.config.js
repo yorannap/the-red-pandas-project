@@ -10,7 +10,8 @@ export default {
     },
     meta: [
       { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+      { name: 'viewport', content: 'width=device-width, initial-scale=1.0, viewport-fit=cover' },
+      { name: 'apple-mobile-web-app-capable', content: 'yes' },
       { hid: 'description', name: 'description', content: 'A design project aimed to bring awareness to the endangered red pandas through education.' },
 
       { property: 'og:title', content: 'Red Pandas Project – Bringing awareness to a flagship species' },

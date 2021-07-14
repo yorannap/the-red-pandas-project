@@ -12,7 +12,7 @@
         <p>{{ mainJson.credits.content1 }}</p>
         <p v-html="mainJson.credits.content2"></p>
         <p v-html="mainJson.credits.content3"></p>
-        <slide-arrows directions="left"></slide-arrows>
+        <slide-arrows directions="left" :end="true"></slide-arrows>
       </div>
     </div>
   </div>

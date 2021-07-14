@@ -4,6 +4,7 @@
       v-if="directions === 'left' || directions === 'both'" class="slide_arrow left" 
       @click="directionalSlideChange(-1)">
       <img :src="this.$store.getters.mainJson.graphics.arrowLeft">
+      <p v-if="end === true" class="back-arrow">Back</p>
     </div>
     <div 
       v-if="directions === 'right' || directions === 'both'" class="slide_arrow right"  
@@ -20,7 +21,8 @@ import { mapActions } from "vuex";
 export default {
   props: {
     directions: String,
-    start: Boolean
+    start: Boolean,
+    end: Boolean
   },
   methods: {
     ...mapActions(["directionalSlideChange"]),

@@ -106,12 +106,12 @@
   "project1": {
     "illustration": "/svg/redpanda-project-1.svg",
     "title": "Conservation",
-    "content": "The Nursery Guardians program aims to create nurseries in degraded forest areas in order to offset habitat loss.<a class='background-link' href='https://www.redpandanetwork.org/what-we-do/conservation/' target='_blank' rel='noopener'>Support Red Panda Network</a>"
+    "content": "The Nursery Guardians program aims to create nurseries in degraded forest areas in order to offset habitat loss.<br><a class='background-link' href='https://www.redpandanetwork.org/what-we-do/conservation/' target='_blank' rel='noopener'>Support Red Panda Network</a>"
   },
   "project2": {
     "illustration": "/svg/redpanda-project-2.svg",
     "title": "Guardians",
-    "content": "Forest Guardians work with their communities to support their well-being, preserve the environment and protect red panda habitats.<a class='background-link' href='https://www.redpandanetwork.org/forest-guardians/' target='_blank' rel='noopener'>Support Red Panda Network</a>"
+    "content": "Forest Guardians work with their communities to support their well-being, preserve the environment and protect red panda habitats.<br><a class='background-link' href='https://www.redpandanetwork.org/forest-guardians/' target='_blank' rel='noopener'>Support Red Panda Network</a>"
   },
   "credits": {
     "illustration": "/svg/redpanda-6.svg",
