@@ -228,6 +228,7 @@ const createStore = () => {
         }
       },
       preloadAnimation(context) {
+        gsap.set( "#app", { display: 'block' })
         if ( context.state.preloadEnabled === true ) {
           gsap.from( "#non-fixed .shift", { opacity: 0, delay: 1 });
           gsap.from( "#non-fixed .shift", { x: -7 + "%", y: -7 + "%", scale: 0.25, duration: 2, delay: 2, ease: "power4.inOut" });

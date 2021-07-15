@@ -293,6 +293,10 @@ a.background-link {
   font-size: 75%;
 }
 
+#app {
+  display: none;
+}
+
 /* header */
 header {
   position: fixed;
