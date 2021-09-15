@@ -168,9 +168,11 @@ const createStore = () => {
           return;
         }
       },
-      rotationAlert(context) {
+      rotationAlert(context, reload) {
         let portrait = context.state.rotation.matches
-        //console.log(context.state.rotation)
+        if(reload) {
+          location.reload();
+        }
         if (portrait) {
           gsap.to("#rotate-alert", { opacity: 100, display:"block" });
           gsap.to(".site-container", { opacity: 0, display:"none" });
@@ -253,7 +255,7 @@ const createStore = () => {
         // listen for keyboard events
         document.addEventListener('keydown', (event) => { context.dispatch('triggerKeydown', event) })
         // listen to rotation change
-        context.state.rotation.addEventListener('change', () => { context.dispatch('rotationAlert') })
+        context.state.rotation.addEventListener('change', () => { context.dispatch('rotationAlert', true) })
       }
     },
     getters: {
