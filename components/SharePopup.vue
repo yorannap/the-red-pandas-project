@@ -13,6 +13,7 @@
           <a class="a2a_button_twitter"></a>
           <a class="a2a_button_whatsapp"></a>
           <a class="a2a_button_google_gmail"></a>
+          <script async src="https://static.addtoany.com/menu/page.js"></script>
         </div>
         <div id="share-link">
           <input id="linkInput" type="text" value="redpandasproject.com" />

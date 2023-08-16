@@ -25,7 +25,6 @@ export default {
       { rel: 'stylesheet', href: 'https://use.typekit.net/yzg6lah.css' } // Adobe fonts
     ],
     script: [
-      { src: 'https://static.addtoany.com/menu/page.js', defer: true },
       { src: 'https://www.googletagmanager.com/gtag/js?id=G-MDC1THN1CH', defer: true }
     ]
   },
